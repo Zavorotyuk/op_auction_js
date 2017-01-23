@@ -1,0 +1,28 @@
+{
+  "name": "angular-ellipses",
+  "version": "0.1.3",
+  "main": [
+    "./src/truncate.js"
+  ],
+  "authors": [
+    {
+      "name": "Brian Matthews"
+    },
+    {
+      "name": "Eugen Istoc"
+    }
+  ],
+  "dependencies": {
+    "angular": "~1.2.0"
+  },
+  "homepage": "https://github.com/genu/angular-ellipses",
+  "_release": "0.1.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.3",
+    "commit": "a2c1f2a4b1af381c83ca80e03058e156e3ef288a"
+  },
+  "_source": "https://github.com/genu/angular-ellipses.git",
+  "_target": "0.1.3",
+  "_originalSource": "angular-ellipses"
+}

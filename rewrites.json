@@ -1,0 +1,7 @@
+[
+    { "from": "/tenders/:id", "to": "tenders/index.html"},
+    { "from": "/static/*", "to": "static/*"},
+    { "from": "/get_current_server_time", "to": "get_current_server_time"},
+    { "from": "/vendor/*", "to": "vendor/*"},
+    { "from": "/*", "to": "*"}
+]
