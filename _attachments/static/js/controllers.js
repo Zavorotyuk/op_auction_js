@@ -651,6 +651,7 @@ angular.module('auction').controller('AuctionController', [
           }
           return;
         }
+
         $scope.http_error_timeout = $scope.default_http_error_timeout;
         var params = AuctionUtils.parseQueryString(location.search);
 
@@ -666,7 +667,9 @@ angular.module('auction').controller('AuctionController', [
         };
         $scope.title_ending = AuctionUtils.prepare_title_ending_data(doc, $scope.lang);
         $scope.replace_document(doc);
-        $scope.document_exists = true;
+
+        doc.auction_type && doc.auction_type == 'esco' ? $scope.document_exists = false : $scope.document_exists = true;
+
         if (AuctionUtils.UnsupportedBrowser()) {
             $timeout(function() {
               $scope.unsupported_browser = true;
@@ -719,6 +722,8 @@ angular.module('auction').controller('AuctionController', [
           })
         }
       });
+
+
     };
     $scope.restart_changes = function() {
       $scope.changes.cancel();

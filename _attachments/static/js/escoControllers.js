@@ -666,7 +666,7 @@ angular.module('esco').controller('escoController', [
         };
         $scope.title_ending = AuctionUtils.prepare_title_ending_data(doc, $scope.lang);
         $scope.replace_document(doc);
-        $scope.document_exists = true;
+        doc.auction_type && doc.auction_type == 'esco' || doc.auction_type == 'default' ? $scope.document_exists = true : $scope.document_exists = false;
         if (AuctionUtils.UnsupportedBrowser()) {
             $timeout(function() {
               $scope.unsupported_browser = true;
