@@ -1,4 +1,4 @@
-angular.module('auction')
+angular.module('esco')
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.useLocalStorage();
     $translateProvider.translations('en', {

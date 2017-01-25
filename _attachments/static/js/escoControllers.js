@@ -1,8 +1,8 @@
 var evtSrc = {};
 
 var dataLayer = dataLayer || [];
-///////////////////////////////////
-angular.module('auction').controller('AuctionController', [
+
+angular.module('esco').controller('escoController', [
   '$scope', 'AuctionConfig', 'AuctionUtils',
   '$timeout', '$http', '$log', '$cookies', '$cookieStore', '$window',
   '$rootScope', '$location', '$translate', '$filter', 'growl', 'growlMessages', 'aside', '$q',
@@ -801,7 +801,7 @@ angular.module('auction').controller('AuctionController', [
 ]);
 
 
-angular.module('auction').controller('OffCanvasController', ['$scope', '$modalInstance',
+angular.module('esco').controller('OffCanvasController', ['$scope', '$modalInstance',
   function($scope, $modalInstance) {
     $scope.allert = function() {
       console.log($scope);
@@ -816,7 +816,7 @@ angular.module('auction').controller('OffCanvasController', ['$scope', '$modalIn
 ]);
 
 
-angular.module('auction').directive('nghReplace', function($compile, $parse, $rootScope) {
+angular.module('esco').directive('nghReplace', function($compile, $parse, $rootScope) {
   return {
     replace: true,
     link: function(scope, element, attr) {
@@ -828,7 +828,7 @@ angular.module('auction').directive('nghReplace', function($compile, $parse, $ro
   };
 });
 
-angular.module('auction')
+angular.module('esco')
   .directive('format', ['$filter', function($filter) {
     return {
       require: '?ngModel',
@@ -874,7 +874,7 @@ angular.module('auction')
   }]);
 
 
-angular.module('auction')
+angular.module('esco')
   .directive('svgTimer', function() {
     return {
 
@@ -885,7 +885,7 @@ angular.module('auction')
     };
   });
 
-angular.module('auction')
+angular.module('esco')
   .filter('fraction', ['$filter',
     function(filter) {
       return function(val, coeficient) {
@@ -911,7 +911,7 @@ angular.module('auction')
 
 
 
-angular.module('auction')
+angular.module('esco')
   .filter('fraction_string', ['$filter',
     function(filter) {
       return function(val) {
@@ -920,7 +920,7 @@ angular.module('auction')
     }
   ]);
 
-angular.module('auction')
+angular.module('esco')
   .filter('eval_string', ['$filter',
     function(filter) {
       return function(val) {
