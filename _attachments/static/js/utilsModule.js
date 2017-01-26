@@ -1,5 +1,5 @@
-angular.module('auction')
-  .factory('AuctionUtils', ['$filter', '$timeout', '$log', '$window', function($filter, $timeout, $log, $window) {
+angular.module('utilsModule', [])
+  .service('utilsService',  ['$filter', '$timeout', '$log', '$window', function($filter, $timeout, $log, $window) {
     // Format msg for timer
     'use strict';
 
@@ -375,19 +375,18 @@ angular.module('auction')
   }]);
 
 
+  angular.module('utilsModule')
+    .factory('aside', ['$modal', function($modal) {
 
-angular.module('auction')
-  .factory('aside', ['$modal', function($modal) {
-
-    var asideFactory = {
-      open: function(config) {
-        var options = angular.extend({}, config);
-        // check placement is set correct
-        // set aside classes
-        options.windowClass = 'ng-aside horizontal left' + (options.windowClass ? ' ' + options.windowClass : '');
-        // delete options.placement
-        return $modal.open(options);
-      }
-    };
-    return angular.extend({}, $modal, asideFactory);
-  }]);
+      var asideFactory = {
+        open: function(config) {
+          var options = angular.extend({}, config);
+          // check placement is set correct
+          // set aside classes
+          options.windowClass = 'ng-aside horizontal left' + (options.windowClass ? ' ' + options.windowClass : '');
+          // delete options.placement
+          return $modal.open(options);
+        }
+      };
+      return angular.extend({}, $modal, asideFactory);
+    }]);

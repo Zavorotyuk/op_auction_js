@@ -3,11 +3,11 @@ var evtSrc = {};
 var dataLayer = dataLayer || [];
 ///////////////////////////////////
 angular.module('auction').controller('AuctionController', [
-  '$scope', 'AuctionConfig', 'AuctionUtils',
+  '$scope', 'AuctionConfig', 'utilsModule',
   '$timeout', '$http', '$log', '$cookies', '$cookieStore', '$window',
   '$rootScope', '$location', '$translate', '$filter', 'growl', 'growlMessages', 'aside', '$q',
   function(
-    $scope, AuctionConfig, AuctionUtils,
+    $scope, AuctionConfig, utilsService,
     $timeout, $http, $log, $cookies, $cookieStore, $window,
     $rootScope, $location, $translate, $filter, growl, growlMessages, $aside, $q
   ) {

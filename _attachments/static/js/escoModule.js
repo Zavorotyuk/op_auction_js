@@ -1,4 +1,4 @@
-var app = angular.module('esco', ['ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'timer', 'angular-growl', 'angular-ellipses', 'GTMLogger']);
+var app = angular.module('esco', ['ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'timer', 'angular-growl', 'angular-ellipses', 'GTMLogger','utilsModule']);
 var db = {};
 var bidder_id = "0";
 var auction_doc_id = auction_doc_id || "";
