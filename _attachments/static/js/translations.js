@@ -31,6 +31,7 @@ angular.module('auction')
       'Results Release': 'Results Release',
       'Waiting': 'Waiting',
       'or lower': 'or lower',
+      'or higher': 'or higher',
       'UAH': 'UAH',
       'shortTime': 'h:mm a',
       'Restart sync': 'Restart sync',
@@ -49,6 +50,7 @@ angular.module('auction')
       'minutes': 'min',
       'seconds': 'sec',
       'minimum': 'minimum',
+      'maximum': 'maximum',
       'Internet connection is lost. Attempt to restart after 1 sec': 'Internet connection is lost. Attempt to restart after 1 sec',
       'Synchronization failed': 'Synchronization failed',
       'Possible results': 'Possible results',
@@ -62,6 +64,7 @@ angular.module('auction')
       'Аuction was completed': 'Аuction was completed on',
       'prohibit connection': 'prohibit connection',
       'Step reduction of Bid': 'Step reduction of Bid',
+      'Step auction of Bid': 'Step auction of Bid',
       'Start value': 'Start value',
       'Your bid appears too low': 'Your bid appears too low',
       'Return to Tender': 'Return to Tender',
@@ -83,9 +86,7 @@ angular.module('auction')
       'to General': 'to General',
       'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.': 'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.',
       'Waiting for the disclosure of the participants\' names': 'Waiting for the disclosure of the participants\' names',
-      'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.',
-      'Auction has not started and will be rescheduled': 'Auction has not started and will be rescheduled',
-      'Please wait for the auction start.': 'Please wait for the auction start.'
+      'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.'
     });
 
     $translateProvider.translations('uk', {
@@ -118,6 +119,7 @@ angular.module('auction')
       'Results Release': 'Результати',
       'Waiting': 'Очікування',
       'or lower': 'або менше',
+      'or higher': 'або більше',
       'UAH': 'грн',
       'shortTime': 'HH:mm',
       'Restart sync': 'Перезапуск синхронізації',
@@ -136,6 +138,7 @@ angular.module('auction')
       'minutes': 'хв',
       'seconds': 'сек',
       'minimum': 'мінімум',
+      'maximum': 'максимум',
       'Internet connection is lost. Attempt to restart after 1 sec': 'З\'єднання з інтернетом втрачено. спроба перезавантаження через 1 сек',
       'Synchronization failed': 'Помилка синхронізації',
       'Possible results': 'Можливі результати',
@@ -149,6 +152,7 @@ angular.module('auction')
       'Аuction was completed': 'Аукціон завершився',
       'prohibit connection': 'заборонити підключення',
       'Step reduction of Bid': 'Крок зменшення торгів',
+      'Step auction of Bid': 'Крок зростання торгів',
       'Start value': 'Стартова сума',
       'Your bid appears too low': 'Ви ввели дуже малу суму, ви впевнені?',
       'Return to Tender': 'Повернутися до Закупівлі',
@@ -170,9 +174,7 @@ angular.module('auction')
       'to General': 'до Загальної',
       'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.': 'Подана вами пропозиція співпадає з пропозицією іншого учасника. Його пропозиція розглядатиметься першою, оскільки вона подана раніше.',
       'Waiting for the disclosure of the participants\' names': 'Очікуємо на розкриття імен учасників',
-      'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Не вдається зробити ставку. Перевірте, що в переглядачі відкрито не більше 2-ох аукціонів.',
-      'Auction has not started and will be rescheduled': 'Аукціон не розпочався і буде перепланований',
-      'Please wait for the auction start.': 'Будь-ласка, дочекайтесь початку аукціону.'
+      'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Не вдається зробити ставку. Перевірте, що в переглядачі відкрито не більше 2-ох аукціонів.'
     });
 
 
@@ -206,6 +208,7 @@ angular.module('auction')
       'Results Release': 'Результаты',
       'Waiting': 'Ожидание',
       'or lower': 'или меньше',
+      'or higher': 'или больше',
       'UAH': 'грн',
       'shortTime': 'HH:mm',
       'Restart sync': 'Перезапуск синхронизации',
@@ -224,6 +227,7 @@ angular.module('auction')
       'minutes': 'мин',
       'seconds': 'сек',
       'minimum': 'минимум',
+      'maximum': 'максимум',
       'Internet connection is lost. Attempt to restart after 1 sec': 'Cоединения с интернетом потеряно. попытка перезагрузки через 1 сек',
       'Synchronization failed': 'Ошибка синхронизации',
       'Possible results': 'Возможные результаты',
@@ -237,6 +241,7 @@ angular.module('auction')
       'Аuction was completed': 'Аукцион закончился',
       'prohibit connection': 'запретить подключение',
       'Step reduction of Bid': 'Шаг уменьшения торгов',
+      'Step auction of Bid': 'Шаг увеличение торгов',
       'Start value': 'Стартовая сумма',
       'Your bid appears too low': 'Вы ввели очень маленькую сумму, вы уверены?',
       'Return to Tender': 'Вернуться к Закупке',
@@ -258,8 +263,6 @@ angular.module('auction')
       'to General': 'к Общей',
       'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.': 'Поданное вами предложение совпадает с предложением другого участника. Его предложение будет рассматриваться первым, поскольку оно подано раньше.',
       'Waiting for the disclosure of the participants\' names': 'Ожидаем раскрытия имен участников',
-      'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Невозможно сделать ставку. Проверьте, что в браузере открыто не более 2-х аукционов.',
-      'Auction has not started and will be rescheduled': 'Аукцион не начался и будет перепланирован',
-      'Please wait for the auction start.': 'Пожалуйста, дождитесь начала аукциона.'
+      'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Невозможно сделать ставку. Проверьте, что в браузере открыто не более 2-х аукционов.'
     });
   }]);
