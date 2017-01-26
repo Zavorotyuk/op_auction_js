@@ -151,6 +151,7 @@
                 </ul>
             </div>
         </div>
+        <!--Initial bids header-->
         <div id="initial-bids-header" class="auction-round past-round" ng-if="auction_doc.current_stage >= 0" >
             <div class="row">
                 <div class="col-xs-12 stage-item stage-round">
@@ -172,6 +173,7 @@
                 <div class="stage-item-lining">
                     <i class="stage-icon"></i>
                     <div class="stage-info">
+                      <!---->
                         <div class="stage-info-lining" ng-class="{'auction-with-two-prices': auction_doc.auction_type == 'meat' && bid_info.bidder_id == bidder_id && !(auction_doc.current_stage == (auction_doc.stages.length - 1))}">
                             <span class="stage-info-item stage-label" ng-if="bid_info.bidder_id != bidder_id ">{{ bid_info.label[lang]||"-" }}</span>
                             <span class="stage-info-item stage-label" ng-if="bid_info.bidder_id == bidder_id " translate>You</span>
@@ -212,13 +214,15 @@
                                     </span>
                                 </span>
 
-                                <span class="label-minimum" ng-if="((bid_info.amount_features||bid_info.amount) == (minimal_bid.amount_features||minimal_bid.amount)) && bid_info.time == minimal_bid.time" translate>minimum</span>
+                                <span class="label-minimum" ng-if="((bid_info.amount_features||bid_info.amount) == (minimal_bid.amount_features||minimal_bid.amount)) && bid_info.time == minimal_bid.time" translate>maximum</span>
                             </span>
                         </div>
+                        <!---->
                     </div>
                 </div>
             </div>
         </div>
+        <!--Initial bids header /-->
         <div ng-if="auction_doc.current_stage >= 0"
              class="auction-round"
              id="round-header-{{$index + 1}}"
@@ -332,7 +336,7 @@
                                     </span>
                                 </span>
 
-                                <span class="label-minimum" ng-if="((auction_doc.stages[stage + $index + 1].amount_features||auction_doc.stages[stage + $index + 1].amount) == (minimal_bid.amount_features||minimal_bid.amount)) && (auction_doc.stages[stage + $index + 1]['time'] == minimal_bid.time)" translate>minimum</span>
+                                <span class="label-minimum" ng-if="((auction_doc.stages[stage + $index + 1].amount_features||auction_doc.stages[stage + $index + 1].amount) == (minimal_bid.amount_features||minimal_bid.amount)) && (auction_doc.stages[stage + $index + 1]['time'] == minimal_bid.time)" translate>maximum</span>
                             </span>
                         </div>
                     </div>
@@ -402,7 +406,7 @@
                                         <span class="amount-currency" ng-if="!angular.isUndefined(bid_info['amount'])">{{ auction_doc.minimalStep.currency|translate }}</span>
                                     </span>
                                 </span>
-                                <span class="label-minimum" ng-if="((bid_info.amount_features||bid_info.amount) == (minimal_bid.amount_features||minimal_bid.amount)) && bid_info.time == minimal_bid.time" translate>minimum</span>
+                                <span class="label-minimum" ng-if="((bid_info.amount_features||bid_info.amount) == (minimal_bid.amount_features||minimal_bid.amount)) && bid_info.time == minimal_bid.time" translate>maximum</span>
                             </span>
                         </div>
                     </div>

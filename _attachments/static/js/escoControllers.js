@@ -551,6 +551,7 @@ angular.module('esco').controller('escoController', [
         return 0;
       }
       $scope.calculated_max_bid_amount = amount;
+      console.log("MAX_BID_AMOUNT" + $scope.calculated_max_bid_amount);
       return amount;
     };
     $scope.calculate_minimal_bid_amount = function() {
@@ -575,13 +576,15 @@ angular.module('esco').controller('escoController', [
           if ($scope.auction_doc.auction_type == 'meat') {
             var diff = math.fraction(a.amount_features) - math.fraction(b.amount_features);
           } else {
-            var diff = a.amount - b.amount;
+            var diff = b.amount - a.amount;
           }
           if (diff == 0) {
             return Date.parse(a.time || "") - Date.parse(b.time || "");
           }
           return diff;
         })[0];
+        console.log("SCOPE_MINIMAL_BID");
+        console.log($scope.minimal_bid);
       }
     };
     $scope.start_sync = function() {
@@ -666,7 +669,8 @@ angular.module('esco').controller('escoController', [
         };
         $scope.title_ending = AuctionUtils.prepare_title_ending_data(doc, $scope.lang);
         $scope.replace_document(doc);
-        doc.auction_type && doc.auction_type == 'esco' || doc.auction_type == 'default' ? $scope.document_exists = true : $scope.document_exists = false;
+        //doc.auction_type && doc.auction_type == 'esco'  ? $scope.document_exists = true : $scope.document_exists = false;
+        $scope.document_exists = true ;
         if (AuctionUtils.UnsupportedBrowser()) {
             $timeout(function() {
               $scope.unsupported_browser = true;
@@ -804,7 +808,6 @@ angular.module('esco').controller('escoController', [
 angular.module('esco').controller('OffCanvasController', ['$scope', '$modalInstance',
   function($scope, $modalInstance) {
     $scope.allert = function() {
-      console.log($scope);
     };
     $scope.ok = function() {
       $modalInstance.close($scope.selected.item);
