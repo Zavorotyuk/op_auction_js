@@ -3,7 +3,7 @@ var evtSrc = {};
 var dataLayer = dataLayer || [];
 ///////////////////////////////////
 angular.module('auction').controller('AuctionController', [
-  '$scope', 'AuctionConfig', 'utilsModule',
+  '$scope', 'AuctionConfig', 'utilsService',
   '$timeout', '$http', '$log', '$cookies', '$cookieStore', '$window',
   '$rootScope', '$location', '$translate', '$filter', 'growl', 'growlMessages', 'aside', '$q',
   function(
@@ -11,14 +11,14 @@ angular.module('auction').controller('AuctionController', [
     $timeout, $http, $log, $cookies, $cookieStore, $window,
     $rootScope, $location, $translate, $filter, growl, growlMessages, $aside, $q
   ) {
-    if (AuctionUtils.inIframe()) {
+    if (utilsService.inIframe()) {
       $log.error('Starts in iframe');
       window.open(location.href, '_blank');
       return false;
     }
     $scope.lang = 'uk';
     $rootScope.normilized = false;
-    $rootScope.format_date = AuctionUtils.format_date;
+    $rootScope.format_date = utilsService.format_date;
     $scope.bidder_id = null;
     $scope.bid = null;
     $scope.allow_bidding = true;
@@ -26,7 +26,7 @@ angular.module('auction').controller('AuctionController', [
     $rootScope.alerts = [];
     $scope.default_http_error_timeout = 500;
     $scope.http_error_timeout = $scope.default_http_error_timeout;
-    $scope.browser_client_id = AuctionUtils.generateUUID();
+    $scope.browser_client_id = utilsService.generateUUID();
     $scope.$watch(function() {return $cookies.logglytrackingsession}, function(newValue, oldValue) {
       $scope.browser_session_id = $cookies.logglytrackingsession;
     })
@@ -45,9 +45,9 @@ angular.module('auction').controller('AuctionController', [
 
       $log.info({
         message: "Setup connection to remote_db",
-        auctions_loggedin: $cookies.auctions_loggedin||AuctionUtils.detectIE()
+        auctions_loggedin: $cookies.auctions_loggedin||utilsService.detectIE()
       })
-      if ($cookies.auctions_loggedin||AuctionUtils.detectIE()) {
+      if ($cookies.auctions_loggedin||utilsService.detectIE()) {
         AuctionConfig.remote_db = AuctionConfig.remote_db + "_secured";
       }
       $scope.changes_options = {
@@ -131,15 +131,15 @@ angular.module('auction').controller('AuctionController', [
         };
         $timeout(function() {
           $rootScope.time_in_title = event.targetScope.days ? (event.targetScope.days + $filter('translate')('days') + " ") : "";
-          $rootScope.time_in_title += event.targetScope.hours ? (AuctionUtils.pad(event.targetScope.hours) + ":") : "";
-          $rootScope.time_in_title += (AuctionUtils.pad(event.targetScope.minutes) + ":");
-          $rootScope.time_in_title += (AuctionUtils.pad(event.targetScope.seconds) + " ");
+          $rootScope.time_in_title += event.targetScope.hours ? (utilsService.pad(event.targetScope.hours) + ":") : "";
+          $rootScope.time_in_title += (utilsService.pad(event.targetScope.minutes) + ":");
+          $rootScope.time_in_title += (utilsService.pad(event.targetScope.seconds) + " ");
         }, 10);
       } else {
         var date = new Date();
-        $scope.seconds_line = AuctionUtils.polarToCartesian(24, 24, 16, (date.getSeconds() / 60) * 360);
-        $scope.minutes_line = AuctionUtils.polarToCartesian(24, 24, 16, (date.getMinutes() / 60) * 360);
-        $scope.hours_line = AuctionUtils.polarToCartesian(24, 24, 14, (date.getHours() / 12) * 360);
+        $scope.seconds_line = utilsService.polarToCartesian(24, 24, 16, (date.getSeconds() / 60) * 360);
+        $scope.minutes_line = utilsService.polarToCartesian(24, 24, 16, (date.getMinutes() / 60) * 360);
+        $scope.hours_line = utilsService.polarToCartesian(24, 24, 14, (date.getHours() / 12) * 360);
       }
     });
 
@@ -210,12 +210,12 @@ angular.module('auction').controller('AuctionController', [
           message: "Tick: " + data
         });
         if ($scope.auction_doc.current_stage > -1) {
-          $rootScope.info_timer = AuctionUtils.prepare_info_timer_data($scope.last_sync, $scope.auction_doc, $scope.bidder_id, $scope.Rounds);
+          $rootScope.info_timer = utilsService.prepare_info_timer_data($scope.last_sync, $scope.auction_doc, $scope.bidder_id, $scope.Rounds);
           $log.debug({
             message: "Info timer data",
             info_timer: $rootScope.info_timer
           });
-          $rootScope.progres_timer = AuctionUtils.prepare_progress_timer_data($scope.last_sync, $scope.auction_doc);
+          $rootScope.progres_timer = utilsService.prepare_progress_timer_data($scope.last_sync, $scope.auction_doc);
           $log.debug({
             message: "Progres timer data",
             progress_timer: $rootScope.progres_timer
@@ -276,7 +276,7 @@ angular.module('auction').controller('AuctionController', [
             ttl: -1,
             disableCountDown: true
           });
-          var params = AuctionUtils.parseQueryString(location.search);
+          var params = utilsService.parseQueryString(location.search);
           if (params.loggedin) {
             $timeout(function() {
               window.location.replace(window.location.protocol + '//' + window.location.host + window.location.pathname);
@@ -327,7 +327,7 @@ angular.module('auction').controller('AuctionController', [
       }, 4000);
     };
     $scope.get_round_number = function(pause_index) {
-      return AuctionUtils.get_round_data(pause_index, $scope.auction_doc, $scope.Rounds);
+      return utilsService.get_round_data(pause_index, $scope.auction_doc, $scope.Rounds);
     };
     $scope.show_bids_form = function(argument) {
       if ((angular.isNumber($scope.auction_doc.current_stage)) && ($scope.auction_doc.current_stage >= 0)) {
@@ -351,17 +351,17 @@ angular.module('auction').controller('AuctionController', [
         }
       }).success(function(data, status, headers, config) {
         $scope.last_sync = new Date(new Date(headers().date));
-        $rootScope.info_timer = AuctionUtils.prepare_info_timer_data($scope.last_sync, $scope.auction_doc, $scope.bidder_id, $scope.Rounds);
+        $rootScope.info_timer = utilsService.prepare_info_timer_data($scope.last_sync, $scope.auction_doc, $scope.bidder_id, $scope.Rounds);
         $log.debug({
           message: "Info timer data:",
           info_timer: $rootScope.info_timer
         });
-        $rootScope.progres_timer = AuctionUtils.prepare_progress_timer_data($scope.last_sync, $scope.auction_doc);
+        $rootScope.progres_timer = utilsService.prepare_progress_timer_data($scope.last_sync, $scope.auction_doc);
         $log.debug({
           message: "Progres timer data:",
           progress_timer: $rootScope.progres_timer
         });
-        var params = AuctionUtils.parseQueryString(location.search);
+        var params = utilsService.parseQueryString(location.search);
         if ($scope.auction_doc.current_stage == -1){
           if ($rootScope.progres_timer.countdown_seconds < 900) {
             $scope.start_changes_feed = true;
@@ -384,7 +384,7 @@ angular.module('auction').controller('AuctionController', [
           }
           $scope.login_params = params;
           delete $scope.login_params.wait;
-          $scope.login_url = './login?' + AuctionUtils.stringifyQueryString($scope.login_params);
+          $scope.login_url = './login?' + utilsService.stringifyQueryString($scope.login_params);
         } else {
           $scope.follow_login_allowed = false;
         }
@@ -653,7 +653,7 @@ angular.module('auction').controller('AuctionController', [
         }
 
         $scope.http_error_timeout = $scope.default_http_error_timeout;
-        var params = AuctionUtils.parseQueryString(location.search);
+        var params = utilsService.parseQueryString(location.search);
 
         $scope.start_sync_event = $q.defer();
         //
@@ -665,12 +665,12 @@ angular.module('auction').controller('AuctionController', [
         } else {
           $scope.follow_login_allowed = false;
         };
-        $scope.title_ending = AuctionUtils.prepare_title_ending_data(doc, $scope.lang);
+        $scope.title_ending = utilsService.prepare_title_ending_data(doc, $scope.lang);
         $scope.replace_document(doc);
 
         doc.auction_type && doc.auction_type == 'esco' ? $scope.document_exists = false : $scope.document_exists = true;
 
-        if (AuctionUtils.UnsupportedBrowser()) {
+        if (utilsService.UnsupportedBrowser()) {
             $timeout(function() {
               $scope.unsupported_browser = true;
               growl.error($filter('translate')('Your browser is out of date, and this site may not work properly.') + '<a style="color: rgb(234, 4, 4); text-decoration: underline;" href="http://browser-update.org/uk/update.html">' + $filter('translate')('Learn how to update your browser.') + '</a>', {
@@ -681,7 +681,7 @@ angular.module('auction').controller('AuctionController', [
         };
         $scope.scroll_to_stage();
         if ($scope.auction_doc.current_stage != ($scope.auction_doc.stages.length - 1)) {
-          if ($cookieStore.get('auctions_loggedin')||AuctionUtils.detectIE()) {
+          if ($cookieStore.get('auctions_loggedin')||utilsService.detectIE()) {
             $log.info({
               message: 'Start private session'
             });
@@ -768,7 +768,7 @@ angular.module('auction').controller('AuctionController', [
       });
     };
     $scope.scroll_to_stage = function() {
-      AuctionUtils.scroll_to_stage($scope.auction_doc, $scope.Rounds);
+      utilsService.scroll_to_stage($scope.auction_doc, $scope.Rounds);
     };
     $scope.array = function(int) {
       return new Array(int);

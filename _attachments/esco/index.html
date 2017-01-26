@@ -442,6 +442,7 @@
                     <div class="col-xs-12">
                         <div class="container">
                             <alert ng-repeat="alert in alerts" type="{{alert.type}}" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></alert>
+                            <!---BidsForm-->
                             <form id="BidsForm" name="form.BidsForm" role="form">
                                 <label for="bid"><span translate>Your proposal</span>:</label>
                                 <span ng-init="max_bid_amount()" class="max_bid_amount" id="max_bid_amount" ng-if="(auction_doc.auction_type||'default') == 'default'"><span id="max_bid_amount_price">{{ calculated_max_bid_amount|fraction }}</span> {{'or lower'|translate}}</span>
@@ -478,6 +479,7 @@
                                     </div>
                                 </div>
                             </form>
+                            <!--BidsForm /-->
                         </div>
                     </div>
                 </div>
@@ -580,7 +582,7 @@ var auction_doc_id = window.location.pathname.split('/').slice(-1).pop();
 
     <script src="../static/js/escoModule.js"></script>
 
-    <script src="../static/js/escoUtils.js"></script>
+    <script src="../static/js/utilsModule.js"></script>
 
     <script src="../static/js/escoTranslations.js"></script>
 

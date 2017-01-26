@@ -31,26 +31,26 @@
     '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5QJXWB');</script>
     <!-- End Google Tag Manager -->
-    
+
     <style type="text/css">
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
           display: none !important;
         }
     </style>
     <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    
+
         <link href="../vendor/angular-growl-2/build/angular-growl.min.css" rel="stylesheet">
-    
+
         <link href="../static/css/starter-template.css" rel="stylesheet">
-    
-    
+
+
     <title ng-bind-template="{{ time_in_title }} {{ info_timer.msg|translate}} - {{ title_ending }}" ng-if="!info_timer.start_time" >
       Аукціон
     </title>
     <title ng-bind-template="{{ $root.info_timer.msg|translate}} {{ format_date($root.info_timer.start_time, lang,'Do MMMM YYYY') }} {{'at'|translate}} {{ format_date($root.info_timer.start_time, lang,'HH:mm') }} - {{ title_ending }}" ng-if="(!$root.info_timer.countdown)&&($root.info_timer.start_time != true)" ></title>
     <title ng-bind-template="{{ $root.info_timer.msg|translate}} - {{ title_ending }}" ng-if="(!$root.info_timer.countdown)&&(info_timer.start_time == true)" ></title>
-    
-    
+
+
 </head>
 
 
@@ -61,7 +61,7 @@
      Here are the http://www.enable-javascript.com
      instructions how to enable JavaScript in your web browser.
     </noscript>
-    
+
     <div ng-if="document_not_found" translate ng-cloak>
         Not Found
     </div>
@@ -541,7 +541,7 @@
         </ul>
 
     </script>
-    
+
 </body>
 
 <script type=text/javascript>
@@ -576,7 +576,7 @@ var auction_doc_id = window.location.pathname.split('/').slice(-1).pop();
 
     <script src="../static/js/app.js"></script>
 
-    <script src="../static/js/utils.js"></script>
+    <script src="../static/js/utilsModule.js"></script>
 
     <script src="../static/js/translations.js"></script>
 
