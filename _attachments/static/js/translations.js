@@ -257,7 +257,7 @@ angular.module('utilsModule')
       'You are an observer and cannot bid.': 'Вы наблюдатель и не можете делать ставки.',
       'Your browser is out of date, and this site may not work properly.': 'Ваш браузер устарел, и этот сайт может некорректно работать.',
       'Learn how to update your browser.': 'Узнайте, как обновить Ваш браузер.',
-      'Not Found': 'Аукциона по данной Id не найдена',
+      'Not Found': 'Аукциона по данной Id не найдено',
       'to Mine': 'к Моей',
       'Clear': 'Очистить',
       'to General': 'к Общей',
