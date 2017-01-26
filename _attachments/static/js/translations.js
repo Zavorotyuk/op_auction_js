@@ -1,4 +1,4 @@
-angular.module('auction')
+angular.module('utilsModule')
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.useLocalStorage();
     $translateProvider.translations('en', {
