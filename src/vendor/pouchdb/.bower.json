@@ -1,0 +1,38 @@
+{
+  "name": "pouchdb",
+  "version": "5.1.1-prerelease",
+  "description": "PouchDB is a pocket-sized database.",
+  "repo": "daleharvey/pouchdb",
+  "keywords": [
+    "db",
+    "couchdb",
+    "pouchdb"
+  ],
+  "dependencies": {},
+  "development": {},
+  "license": "Apache",
+  "main": "dist/pouchdb.js",
+  "scripts": [
+    "dist/pouchdb.js",
+    "dist/pouchdb.min.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests",
+    "vendor",
+    "npm-debug.log",
+    "phantomjsdriver.log"
+  ],
+  "_cacheHeaders": {
+    "ETag": "\"a5c046-4571bd-5241c767ad940\"",
+    "Last-Modified": "Mon, 09 Nov 2015 14:32:29 GMT",
+    "Content-Length": "4551101",
+    "Content-Type": "application/x-gzip"
+  },
+  "_release": "e-tag:a5c046-45",
+  "_source": "http://op:x9W3jZ@dist.quintagroup.com/op/pouchdb-5.1.1-prerelease-openprocurement.tgz",
+  "_target": "*",
+  "_originalSource": "http://op:x9W3jZ@dist.quintagroup.com/op/pouchdb-5.1.1-prerelease-openprocurement.tgz"
+}
