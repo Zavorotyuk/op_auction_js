@@ -2,3 +2,4 @@ node_modules/
 _attachments/static/vendor/
 _attachments/static/.webassets-cache/
 _attachments/static/min/
+_attachments/*
