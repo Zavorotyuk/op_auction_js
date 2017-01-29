@@ -554,6 +554,7 @@ var auction_doc_id = window.location.pathname.split('/').slice(-1).pop();
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjs/2.3.0/math.min.js"></script>
 
+    <!-- build:vendors -->
     <script src="../vendor/pouchdb/dist/pouchdb.js"></script>
 
     <script src="../vendor/event-source-polyfill/eventsource.min.js"></script>
@@ -585,6 +586,14 @@ var auction_doc_id = window.location.pathname.split('/').slice(-1).pop();
     <script src="../vendor/moment/locale/ro.js"></script>
 
     <script src="../vendor/moment/locale/ru.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js -->
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/controller.js"></script>
+    <script src="../static/js/translations.js"></script>
+    <script src="../static/js/app.common.js"></script>
+    <!-- endbuild -->
 
 
 
