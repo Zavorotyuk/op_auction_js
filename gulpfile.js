@@ -3,11 +3,18 @@ var del = require('del');
 var htmlreplace = require('gulp-html-replace');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
+var ngAnnotate = require('gulp-ng-annotate');
+var uglify = require('gulp-uglify');
+var bytediff = require('gulp-bytediff');
+var rename = require('gulp-rename');
+var clean = require('gulp-clean');
+
 
 //Clean ./_attachments folder
 
 gulp.task('clean', function() {
-  return del('_attachments/*')
+  return gulp.src('_attachments/static/', {read: false})
+  .pipe(clean());
 })
 
 //Copy all files from ./src to _attachments
@@ -33,7 +40,7 @@ gulp.task('build:production', function() {
 
 //Change scripts in esco/index.html pages
 
-gulp.task('esco:html', function() {
+gulp.task('replace:esco', function() {
   gulp.src('src/esco/index.html')
     .pipe(htmlreplace({
         'js': 'static/js/main.min.js',
@@ -43,7 +50,7 @@ gulp.task('esco:html', function() {
 });
 
 //Change scripts in tenders/index.html
-gulp.task('tenders:html', function() {
+gulp.task('replace:tenders', function() {
   gulp.src('src/tenders/index.html')
     .pipe(htmlreplace({
         'js': 'static/js/main.min.js',
@@ -55,13 +62,18 @@ gulp.task('tenders:html', function() {
 
 // Replace html
 
-gulp.task('replace:html', ['esco:html', 'tenders:html']);
+gulp.task('replace:html', ['replace:esco', 'replace:tenders']);
 
 
 //concat js
 
-gulp.task('scripts:concat', function() {
-  return gulp.src('src/static/js/*.js')
-    .pipe(concat('main.js'))
-    .pipe(gulp.dest('_attachments/static/js'));
+gulp.task('minify:js', function() {
+    return gulp.src('src/static/js/*.js')
+			.pipe(concat('main.js', {newLine: ';'}))
+			.pipe(ngAnnotate({add: true}))
+      .pipe(bytediff.start())
+      	.pipe(uglify({mangle: true}))
+      .pipe(bytediff.stop())
+      .pipe(rename('main.min.js'))
+      .pipe(gulp.dest('_attachments/static/js/'));
 });
