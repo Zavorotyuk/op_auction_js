@@ -8,6 +8,9 @@ var uglify = require('gulp-uglify');
 var bytediff = require('gulp-bytediff');
 var rename = require('gulp-rename');
 var clean = require('gulp-clean');
+var cleanCss = require('gulp-clean-css');
+var imagemin = require('gulp-imagemin');
+
 
 
 //Clean ./_attachments folder
@@ -35,7 +38,7 @@ gulp.task('build:devel', function(callback) {
 //Copy all files from ./src to _attachments
 
 gulp.task('build:production', function() {
-   runSequence('clean', 'minify:js','replace:html', function() {
+   runSequence('clean', ['minify:js','replace:html', 'minify:css'], function() {
     console.log('Configured production environment');
   })
 
@@ -47,7 +50,8 @@ gulp.task('replace:esco', function() {
   gulp.src('src/esco/index.html')
     .pipe(htmlreplace({
         'js': 'static/js/main.min.js',
-        'vendors': 'static/vendors/main.min.js'
+        'vendors': 'vendors/main.min.js',
+        'css': 'static/css/starter-template.min.css'
     }))
     .pipe(gulp.dest('_attachments/esco/'));
 });
@@ -57,7 +61,8 @@ gulp.task('replace:tenders', function() {
   gulp.src('src/tenders/index.html')
     .pipe(htmlreplace({
         'js': 'static/js/main.min.js',
-        'vendors': 'static/vendors/main.min.js'
+        'vendors': 'vendors/main.min.js',
+        'css': 'static/css/starter-template.min.css'
     }))
     .pipe(gulp.dest('_attachments/tenders/'));
 });
@@ -68,7 +73,7 @@ gulp.task('replace:tenders', function() {
 gulp.task('replace:html', ['replace:esco', 'replace:tenders']);
 
 
-//concat js
+//concat and minify js
 
 gulp.task('minify:js', function() {
     return gulp.src('src/static/js/*.js')
@@ -80,3 +85,22 @@ gulp.task('minify:js', function() {
       .pipe(rename('main.min.js'))
       .pipe(gulp.dest('_attachments/static/js/'));
 });
+
+
+gulp.task('minify:vendors', function() {
+
+})
+
+
+gulp.task('minify:css', function() {
+  return gulp.src('src/static/css/*.css')
+    .pipe(cleanCss({compatibility: 'ie8'}))
+    .pipe(rename('starter-template.min.css'))
+    .pipe(gulp.dest('_attachments/static/css'));
+});
+
+gulp.task('minify:img', () =>
+    gulp.src('src/img/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('_attachments/images'))
+      );
