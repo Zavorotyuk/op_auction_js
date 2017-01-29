@@ -13,21 +13,21 @@ var clean = require('gulp-clean');
 //Clean ./_attachments folder
 
 gulp.task('clean', function() {
-  return gulp.src('_attachments/static/', {read: false})
+  return gulp.src('./_attachments', {read: false})
   .pipe(clean());
 })
 
 //Copy all files from ./src to _attachments
 
 gulp.task('dev:cp', function() {
-       gulp.src(['src/**/*'])
-	    .pipe(gulp.dest('_attachments'))
+       return gulp.src(['src/**/*'])
+	    .pipe(gulp.dest('./_attachments/'))
 });
 
 //Copy all files from ./src to _attachments
 
 gulp.task('build:devel', function(callback) {
-  runSequence('clean', 'dev:cp', function() {
+   runSequence('clean', 'dev:cp', function() {
     console.log("Configured development environment");
   });
 });
@@ -35,6 +35,9 @@ gulp.task('build:devel', function(callback) {
 //Copy all files from ./src to _attachments
 
 gulp.task('build:production', function() {
+   runSequence('clean', 'minify:js','replace:html', function() {
+    console.log('Configured production environment');
+  })
 
 });
 
