@@ -10,6 +10,7 @@ var rename = require('gulp-rename');
 var clean = require('gulp-clean');
 var cleanCss = require('gulp-clean-css');
 var imagemin = require('gulp-imagemin');
+var plumber = require('gulp-plumber');
 
 
 
@@ -38,7 +39,7 @@ gulp.task('build:devel', function(callback) {
 //Copy all files from ./src to _attachments
 
 gulp.task('build:production', function() {
-   runSequence('clean', ['minify:js','replace:html', 'minify:css'], function() {
+   runSequence('clean', ['concat:js','replace:html', 'minify:css', 'copy:vendors'], function() {
     console.log('Configured production environment');
   })
 
@@ -49,9 +50,9 @@ gulp.task('build:production', function() {
 gulp.task('replace:esco', function() {
   gulp.src('src/esco/index.html')
     .pipe(htmlreplace({
-        'js': 'static/js/main.min.js',
-        'vendors': 'vendors/main.min.js',
-        'css': 'static/css/starter-template.min.css'
+        // 'js': '../static/js/main.min.js',
+        // 'vendors': '../vendors/main.min.js',
+        'css': '../static/css/starter-template.min.css'
     }))
     .pipe(gulp.dest('_attachments/esco/'));
 });
@@ -60,9 +61,9 @@ gulp.task('replace:esco', function() {
 gulp.task('replace:tenders', function() {
   gulp.src('src/tenders/index.html')
     .pipe(htmlreplace({
-        'js': 'static/js/main.min.js',
-        'vendors': 'vendors/main.min.js',
-        'css': 'static/css/starter-template.min.css'
+        'js': '../static/js/main.min.js',
+        // 'vendors': '../vendors/main.min.js',
+        'css': '../static/css/starter-template.min.css'
     }))
     .pipe(gulp.dest('_attachments/tenders/'));
 });
@@ -75,17 +76,23 @@ gulp.task('replace:html', ['replace:esco', 'replace:tenders']);
 
 //concat and minify js
 
-gulp.task('minify:js', function() {
-    return gulp.src('src/static/js/*.js')
-			.pipe(concat('main.js', {newLine: ';'}))
-			.pipe(ngAnnotate({add: true}))
-      .pipe(bytediff.start())
-      	.pipe(uglify({mangle: true}))
-      .pipe(bytediff.stop())
-      .pipe(rename('main.min.js'))
-      .pipe(gulp.dest('_attachments/static/js/'));
-});
+gulp.task('concat:js', function() {
+    return gulp.src(['src/static/js/*.js'])
+	    // .pipe(plumber())
+			// .pipe(concat('main.min.js'))
+      // .pipe(plumber.stop())
+      .pipe(gulp.dest('_attachments/static/js'))
 
+});
+//
+// gulp.task('minify:js', function() {
+//     return gulp.src('src/static/js/*.js')
+// 			.pipe(concat('main.js', {newLine: ';'}))
+// 			.pipe(ngAnnotate({add: true}))
+//       .pipe(rename('main.min.js'))
+//       .pipe(gulp.dest('_attachments/static/js/'));
+// });
+//
 
 gulp.task('minify:vendors', function() {
 
@@ -104,3 +111,8 @@ gulp.task('minify:img', () =>
         .pipe(imagemin())
         .pipe(gulp.dest('_attachments/images'))
       );
+
+gulp.task('copy:vendors', function() {
+  gulp.src('src/vendor/**/*')
+  .pipe(gulp.dest('_attachments/vendor'))
+})
