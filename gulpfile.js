@@ -14,141 +14,114 @@ var plumber = require('gulp-plumber');
 
 
 
-//Clean ./_attachments folder
-
-gulp.task('clean', function() {
-  return gulp.src('./_attachments', {read: false})
-    .pipe(clean());
-})
-
-//Copy all files from ./src to _attachments
-
-gulp.task('dev:cp', function() {
-  return gulp.src(['src/**/*'])
-    .pipe(gulp.dest('./_attachments/'))
-});
-
-//Copy all files from ./src to _attachments
-
-gulp.task('build:devel', function(callback) {
-  runSequence('clean', 'dev:cp', function() {
-    console.log("Configured development environment");
-  });
-});
-
-//Copy all files from ./src to _attachments
-
-gulp.task('build:production', function() {
-  runSequence('clean', ['replace:html', 'prepare:static',
-                         'copy:vendors','minify:img',
-                         'minify:main.css', 'copy:other',
-                         'concat:js'], function() {
-      console.log('Configured production environment');
+// common
+  gulp.task('clean', function() {
+    return gulp.src('./_attachments', {read: false})
+      .pipe(clean());
   })
-});
-
-//Change scripts in esco/index.html pages
-
-gulp.task('replace:esco', function() {
-  gulp.src('src/esco/index.html')
-    .pipe(htmlreplace({
-        'js': '../static/js/main.js',
-        // 'vendors': '../vendors/main.min.js',
-        'css': '../static/css/starter-template.min.css'
-    }))
-    .pipe(gulp.dest('_attachments/esco/'));
-});
-
-//Change scripts in tenders/index.html
-gulp.task('replace:tenders', function() {
-  gulp.src('src/tenders/index.html')
-    .pipe(htmlreplace({
-        'js': '../static/js/main.js',
-        // 'vendors': '../vendors/main.min.js',
-        'css': '../static/css/starter-template.min.css'
-    }))
-    .pipe(gulp.dest('_attachments/tenders/'));
-});
 
 
-// Replace html
+//devel
 
-gulp.task('replace:html', ['replace:esco', 'replace:tenders']);
+  gulp.task('build:devel', function(callback) {
+    runSequence('clean', 'dev:cp', function() {
+      console.log("Configured development environment");
+    });
+  });
 
-
-//concat and minify js
-
-
-gulp.task('prepare:static',
-  ['concat:js','minify:static/css',
-  'minify:static/img','copy:fonts']);
-
-
-gulp.task('concat:js', function() {
-  return gulp.src(['src/static/js/*.js'])
-	    // .pipe(plumber())
-			// .pipe(concat('main.min.js'))
-      // .pipe(plumber.stop())
-    .pipe(gulp.dest('_attachments/static/js'))
-
-});
-//
-// gulp.task('minify:js', function() {
-//     return gulp.src('src/static/js/*.js')
-// 			.pipe(concat('main.js', {newLine: ';'}))
-// 			.pipe(ngAnnotate({add: true}))
-//       .pipe(rename('main.min.js'))
-//       .pipe(gulp.dest('_attachments/static/js/'));
-// });
-//
+  gulp.task('dev:cp', function() {
+    return gulp.src(['src/**/*'])
+      .pipe(gulp.dest('./_attachments/'))
+  });
 
 
+//production
 
-gulp.task('minify:static/css', function() {
-  return gulp.src('src/static/css/*.css')
-    .pipe(cleanCss({compatibility: 'ie8'}))
-    .pipe(rename('starter-template.min.css'))
-    .pipe(gulp.dest('_attachments/static/css'));
-});
+  gulp.task('build:production', function() {
+    runSequence('clean', ['replace:html', 'prepare:static',
+      'copy:vendors','minify:img','minify:main.css', 'copy:other',
+      'concat:js'], function() {
+        console.log('Configured production environment');
+    })
+  });
 
-gulp.task('minify:main.css', function() {
-  gulp.src('src/style/main.css')
-  .pipe(cleanCss({compatibility: 'ie8'}))
-  .pipe(gulp.dest('_attachments/style/'))
-})
 
-gulp.task('minify:img', () =>
-  gulp.src('src/img/*')
+  gulp.task('replace:html', ['replace:esco', 'replace:tenders']);
+
+  gulp.task('replace:esco', function() {
+    gulp.src('src/esco/index.html')
+      .pipe(htmlreplace({
+          'js': '../static/js/main.js',
+          // 'vendors': '../vendors/main.min.js',
+          'css': '../static/css/starter-template.min.css'
+      }))
+      .pipe(gulp.dest('_attachments/esco/'));
+  });
+
+  gulp.task('replace:tenders', function() {
+    gulp.src('src/tenders/index.html')
+      .pipe(htmlreplace({
+          'js': '../static/js/main.js',
+          // 'vendors': '../vendors/main.min.js',
+          'css': '../static/css/starter-template.min.css'
+      }))
+      .pipe(gulp.dest('_attachments/tenders/'));
+  });
+
+
+  gulp.task('prepare:static', ['concat:js','minify:static/css',
+    'minify:static/img','copy:fonts']);
+
+
+  gulp.task('concat:js', function () {
+    gulp.src(['src/static/js/escoModule.js', ,'src/static/js/app.js', 'src/static/js/*.js'])
+      .pipe(concat('main.js'))
+      .pipe(gulp.dest('_attachments/static/js'))
+  })
+
+
+  gulp.task('minify:static/css', function() {
+    return gulp.src('src/static/css/*.css')
+      .pipe(cleanCss({compatibility: 'ie8'}))
+      .pipe(rename('starter-template.min.css'))
+      .pipe(gulp.dest('_attachments/static/css'));
+  });
+
+
+  gulp.task('minify:static/img', function() {
+    gulp.src('src/static/img/*')
     .pipe(imagemin())
-    .pipe(gulp.dest('_attachments/img'))
-);
-
-gulp.task('minify:static/img', function() {
-  gulp.src('src/static/img/*')
-  .pipe(imagemin())
-  .pipe(gulp.dest('_attachments/static/img'))
-})
-
-gulp.task('copy:vendors', function() {
-  gulp.src('src/vendor/**/*')
-  .pipe(gulp.dest('_attachments/vendor'))
-})
+    .pipe(gulp.dest('_attachments/static/img'))
+  })
 
 
-gulp.task('copy:fonts', function() {
-  gulp.src('src/static/fonts/*')
-  .pipe(gulp.dest('_attachments/static/fonts'))
-})
+  gulp.task('copy:fonts', function() {
+    gulp.src('src/static/fonts/*')
+    .pipe(gulp.dest('_attachments/static/fonts'))
+  })
 
 
-gulp.task('copy:other', function() {
-  gulp.src(['src/*.xml','src/*.ico','src/*.json','src/get_current_server_time'])
-  .pipe(gulp.dest('_attachments'))
-})
+  gulp.task('minify:main.css', function() {
+    gulp.src('src/style/main.css')
+    .pipe(cleanCss({compatibility: 'ie8'}))
+    .pipe(gulp.dest('_attachments/style/'))
+  })
 
 
-gulp.task('concat:js', function () {
-  gulp.src(['src/static/js/escoModule.js', ,'src/static/js/app.js', 'src/static/js/*.js'])
-    .pipe(concat('main.js'))
-    .pipe(gulp.dest('_attachments/static/js'))
-})
+  gulp.task('minify:img', () =>
+    gulp.src('src/img/*')
+      .pipe(imagemin())
+      .pipe(gulp.dest('_attachments/img'))
+  );
+
+
+  gulp.task('copy:vendors', function() {
+    gulp.src('src/vendor/**/*')
+    .pipe(gulp.dest('_attachments/vendor'))
+  })
+
+
+  gulp.task('copy:other', function() {
+    gulp.src(['src/*.xml','src/*.ico','src/*.json','src/get_current_server_time'])
+    .pipe(gulp.dest('_attachments'))
+  })
