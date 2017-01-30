@@ -11,7 +11,13 @@ var clean = require('gulp-clean');
 var cleanCss = require('gulp-clean-css');
 var imagemin = require('gulp-imagemin');
 var plumber = require('gulp-plumber');
+var mainBowerFiles = require('main-bower-files');
 
+//watch
+
+gulp.task('watch', function() {
+     gulp.watch('./**/src/**/*', ['build:devel'])
+});
 
 
 // common
@@ -23,11 +29,11 @@ var plumber = require('gulp-plumber');
 
 //devel
 
-  gulp.task('build:devel', function(callback) {
-    runSequence('clean', 'dev:cp', function() {
-      console.log("Configured development environment");
-    });
-  });
+gulp.task('build:devel',function(callback){
+  return runSequence(
+      'clean','dev:cp',  callback
+  );
+});
 
   gulp.task('dev:cp', function() {
     return gulp.src(['src/**/*'])

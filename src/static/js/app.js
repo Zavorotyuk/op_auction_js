@@ -10,7 +10,7 @@ app.constant('AuctionConfig', {
   restart_retries: 10,
   default_lang: 'uk',
   debug: false
-});
+}); 
 
 app.filter('formatnumber', ['$filter',
   function(filter) {
