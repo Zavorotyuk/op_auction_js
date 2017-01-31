@@ -1,29 +1,26 @@
-var gulp = require('gulp');
-var del = require('del');
-var htmlreplace = require('gulp-html-replace');
-var runSequence = require('run-sequence');
-var concat = require('gulp-concat');
-var ngAnnotate = require('gulp-ng-annotate');
-var uglify = require('gulp-uglify');
-var bytediff = require('gulp-bytediff');
-var rename = require('gulp-rename');
-var clean = require('gulp-clean');
-var cleanCss = require('gulp-clean-css');
-var imagemin = require('gulp-imagemin');
-var plumber = require('gulp-plumber');
-var ngAnnotate = require('gulp-ng-annotate');
-var plumber = require('gulp-plumber');
+const gulp = require('gulp');
+const htmlreplace = require('gulp-html-replace');
+const runSequence = require('run-sequence');
+const concat = require('gulp-concat');
+const ngAnnotate = require('gulp-ng-annotate');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const clean = require('gulp-clean');
+const cleanCss = require('gulp-clean-css');
+const imagemin = require('gulp-imagemin');
+const plumber = require('gulp-plumber');
+
+
+
 
 //watch
   gulp.task('watch:devel', () => gulp.watch('./**/src/**/*', ['build:devel']) );
-
 
 // common
   gulp.task('clean', () =>
     gulp.src('./_attachments', {read: false})
       .pipe(clean())
   );
-
 
 //devel
 
@@ -35,7 +32,6 @@ var plumber = require('gulp-plumber');
     gulp.src(['src/**/*'])
       .pipe(gulp.dest('./_attachments/'))
   );
-
 
 //production
 
@@ -134,12 +130,12 @@ var plumber = require('gulp-plumber');
 
 
   gulp.task('copy:vendors', () =>
-    gulp.src('src/vendor/**/*')
-    .pipe(gulp.dest('_attachments/vendor'))
+    gulp.src('src/vendor/*')
+      .pipe(gulp.dest('_attachments/vendor/'))
   );
 
 
   gulp.task('copy:other', () =>
     gulp.src(['src/*.xml','src/*.ico','src/*.json','src/get_current_server_time'])
-    .pipe(gulp.dest('_attachments'))
+      .pipe(gulp.dest('_attachments'))
   );
