@@ -17,7 +17,7 @@ angular.module('auction').controller('AuctionController', [
       return false;
     }
     $scope.lang = 'uk';
-    $rootScope.normilized = false;
+    $rootScope.normilized = false; 
     $rootScope.format_date = utilsService.format_date;
     $scope.bidder_id = null;
     $scope.bid = null;
