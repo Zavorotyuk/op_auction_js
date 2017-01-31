@@ -12,6 +12,7 @@ var cleanCss = require('gulp-clean-css');
 var imagemin = require('gulp-imagemin');
 var plumber = require('gulp-plumber');
 var ngAnnotate = require('gulp-ng-annotate');
+var plumber = require('gulp-plumber');
 
 //watch
   gulp.task('watch:devel', function() {
@@ -56,21 +57,25 @@ gulp.task('build:devel',function(callback){
 
   gulp.task('replace:esco', function() {
     gulp.src('src/esco/index.html')
+      .pipe(plumber())
       .pipe(htmlreplace({
           'js': '../static/js/main.min.js',
         //  'vendors': '../dist/vendor.js',
           'css': '../static/css/starter-template.min.css'
       }))
+      .pipe(plumber.stop())
       .pipe(gulp.dest('_attachments/esco/'));
   });
 
   gulp.task('replace:tenders', function() {
     gulp.src('src/tenders/index.html')
+      .pipe(plumber())
       .pipe(htmlreplace({
           'js': '../static/js/main.min.js',
           //'vendors': '../dist/vendor.js',
           'css': '../static/css/starter-template.min.css'
       }))
+      .pipe(plumber.stop())
       .pipe(gulp.dest('_attachments/tenders/'));
   });
 
@@ -81,24 +86,30 @@ gulp.task('build:devel',function(callback){
 
   gulp.task('minify:js', function () {
     gulp.src(['src/static/js/escoModule.js', ,'src/static/js/app.js', 'src/static/js/*.js'])
+      .pipe(plumber())
       .pipe(concat('main.min.js'))
       .pipe(ngAnnotate())
       .pipe(uglify())
+      .pipe(plumber.stop())
       .pipe(gulp.dest('_attachments/static/js'))
   })
 
 
   gulp.task('minify:static/css', function() {
     return gulp.src('src/static/css/*.css')
+      .pipe(plumber())
       .pipe(cleanCss({compatibility: 'ie8'}))
       .pipe(rename('starter-template.min.css'))
+      .pipe(plumber.stop())
       .pipe(gulp.dest('_attachments/static/css'));
   });
 
 
   gulp.task('minify:static/img', function() {
     gulp.src('src/static/img/*')
+    .pipe(plumber())
     .pipe(imagemin())
+    .pipe(plumber.stop())
     .pipe(gulp.dest('_attachments/static/img'))
   })
 
@@ -111,14 +122,18 @@ gulp.task('build:devel',function(callback){
 
   gulp.task('minify:main.css', function() {
     gulp.src('src/style/main.css')
+    .pipe(plumber())
     .pipe(cleanCss({compatibility: 'ie8'}))
+    .pipe(plumber.stop())
     .pipe(gulp.dest('_attachments/style/'))
   })
 
 
   gulp.task('minify:img', () =>
     gulp.src('src/img/*')
+      .pipe(plumber())
       .pipe(imagemin())
+      .pipe(plumber.stop())
       .pipe(gulp.dest('_attachments/img'))
   );
 
