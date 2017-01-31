@@ -44,10 +44,11 @@ gulp.task('build:devel',function(callback){
 
   gulp.task('build:production', function() {
     runSequence('clean', ['replace:html', 'prepare:static',
-      'copy:vendors','minify:img','minify:main.css', 'copy:other',
-      'concat:js'], function() {
-        console.log('Configured production environment');
-    })
+      'copy:vendors', 'minify:js','minify:img','minify:main.css',
+      'copy:other'],
+       function() {
+         console.log('Configured production environment');
+      })
   });
 
 
@@ -56,7 +57,7 @@ gulp.task('build:devel',function(callback){
   gulp.task('replace:esco', function() {
     gulp.src('src/esco/index.html')
       .pipe(htmlreplace({
-          'js': '../static/js/main.js',
+          'js': '../static/js/main.min.js',
         //  'vendors': '../dist/vendor.js',
           'css': '../static/css/starter-template.min.css'
       }))
@@ -66,7 +67,7 @@ gulp.task('build:devel',function(callback){
   gulp.task('replace:tenders', function() {
     gulp.src('src/tenders/index.html')
       .pipe(htmlreplace({
-          'js': '../static/js/main.js',
+          'js': '../static/js/main.min.js',
           //'vendors': '../dist/vendor.js',
           'css': '../static/css/starter-template.min.css'
       }))
@@ -74,13 +75,13 @@ gulp.task('build:devel',function(callback){
   });
 
 
-  gulp.task('prepare:static', ['concat:js','minify:static/css',
+  gulp.task('prepare:static', ['minify:js','minify:static/css',
     'minify:static/img','copy:fonts']);
 
 
-  gulp.task('concat:js', function () {
+  gulp.task('minify:js', function () {
     gulp.src(['src/static/js/escoModule.js', ,'src/static/js/app.js', 'src/static/js/*.js'])
-      .pipe(concat('main.js'))
+      .pipe(concat('main.min.js'))
       .pipe(ngAnnotate())
       .pipe(uglify())
       .pipe(gulp.dest('_attachments/static/js'))
@@ -132,11 +133,3 @@ gulp.task('build:devel',function(callback){
     gulp.src(['src/*.xml','src/*.ico','src/*.json','src/get_current_server_time'])
     .pipe(gulp.dest('_attachments'))
   })
-
-
-  //
-  // gulp.task('default', function () {
-  //     return gulp.src('src/app.js')
-  //         .pipe(ngAnnotate())
-  //         .pipe(gulp.dest('dist'));
-  // });
