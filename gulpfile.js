@@ -13,7 +13,19 @@ const hash = require('gulp-hash');
 const replace = require('gulp-replace');
 
 
-
+let vendorPath = [
+  "./src/vendor/pouchdb/dist/pouchdb.js",
+  "./src/vendor/event-source-polyfill/eventsource.min.js",
+  "./src/vendor/angular-cookies/angular-cookies.min.js",
+  "./src/vendor/angular-ellipses/src/truncate.js",
+  "./src/vendor/angular-timer/dist/angular-timer.min.js",
+  "./src/vendor/angular-translate/angular-translate.min.js",
+  "./src/vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js",
+  "./src/vendor/angular-translate-storage-local/angular-translate-storage-local.min.js",
+  "./src/vendor/angular-gtm-logger/angular-gtm-logger.min.js",
+  "./src/vendor/moment/locale/ro.js",
+  "./src/vendor/moment/locale/ru.js",
+]
 
 //watch
   gulp.task('watch:devel', () => gulp.watch('./**/src/**/*', ['build:devel']) );
@@ -39,7 +51,7 @@ const replace = require('gulp-replace');
 
   gulp.task('build:production', () =>
     runSequence('clean', ['replace:html', 'prepare:static',
-      'copy:vendors', 'minify:js','minify:img','minify:main.css',
+      'minify:vendors', 'minify:js','minify:img','minify:main.css',
       'copy:other'], 'hash:production', () => {
         console.log("Configured production environment");
       })
@@ -53,7 +65,7 @@ const replace = require('gulp-replace');
       .pipe(plumber())
       .pipe(htmlreplace({
           'js': '../static/js/main.min.js',
-        //  'vendors': '../dist/vendor.js',
+          'vendor': '../vendor/vendor.min.js',
           'css': '../static/css/starter-template.min.css'
       }))
       .pipe(plumber.stop())
@@ -65,7 +77,7 @@ const replace = require('gulp-replace');
       .pipe(plumber())
       .pipe(htmlreplace({
           'js': '../static/js/main.min.js',
-          //'vendors': '../dist/vendor.js',
+          'vendor': '../vendor/vendor.min.js',
           'css': '../static/css/starter-template.min.css'
       }))
       .pipe(plumber.stop())
@@ -79,6 +91,7 @@ const replace = require('gulp-replace');
     gulp.src('./_attachments/esco/index.html')
       .pipe(replace('main.min.js', assets['main.min.js']))
       .pipe(replace('starter-template.min.css', assets['starter-template.min.css']))
+      .pipe(replace('vendor.min.js', assets['vendor.min.js']))
       .pipe(gulp.dest('_attachments/esco/'))
   });
 
@@ -87,6 +100,7 @@ const replace = require('gulp-replace');
     gulp.src('./_attachments/tenders/index.html')
       .pipe(replace('main.min.js', assets['main.min.js']))
       .pipe(replace('starter-template.min.css', assets['starter-template.min.css']))
+      .pipe(replace('vendor.min.js', assets['vendor.min.js']))
       .pipe(gulp.dest('_attachments/tenders'))
   });
 
@@ -155,11 +169,20 @@ const replace = require('gulp-replace');
   );
 
 
-  gulp.task('copy:vendors', () =>
-    gulp.src('src/vendor/**/*')
-      .pipe(gulp.dest('_attachments/vendor/'))
+  gulp.task('minify:vendors', ['copy:customVendor'], () =>
+    gulp.src(vendorPath)
+      .pipe(concat('vendor.min.js'))
+      .pipe(uglify())
+      .pipe(hash())
+      .pipe(gulp.dest('_attachments/vendor'))
+      .pipe(hash.manifest('assets.json'))
+      .pipe(gulp.dest('_attachments/'))
   );
 
+  gulp.task('copy:customVendor', () =>
+    gulp.src('./src/vendor/angular-growl-2/**/*')
+      .pipe(gulp.dest('./_attachments/vendor/angular-growl-2'))
+  )
 
   gulp.task('copy:other', () =>
     gulp.src(['src/*.xml','src/*.ico','src/*.json','src/get_current_server_time'])

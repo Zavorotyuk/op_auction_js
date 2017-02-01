@@ -442,7 +442,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="container">
-                            <alert ng-repeat="alert in alerts" type="{{alert.type}}" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></alert>      
+                            <alert ng-repeat="alert in alerts" type="{{alert.type}}" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></alert>
                             <form id="BidsForm" name="form.BidsForm" role="form">
                                 <label for="bid"><span translate>Your proposal</span>:</label>
                                 <span ng-init="max_bid_amount()" class="max_bid_amount" id="max_bid_amount" ng-if="(auction_doc.auction_type||'default') == 'default'"><span id="max_bid_amount_price">{{ calculated_max_bid_amount|fraction }}</span> {{'or lower'|translate}}</span>
@@ -560,7 +560,7 @@ var auction_doc_id = window.location.pathname.split('/').slice(-1).pop();
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjs/2.3.0/math.min.js"></script>
 
-
+    <!-- build:vendor -->
     <script src="../vendor/pouchdb/dist/pouchdb.js"></script>
 
     <script src="../vendor/event-source-polyfill/eventsource.min.js"></script>
@@ -583,8 +583,8 @@ var auction_doc_id = window.location.pathname.split('/').slice(-1).pop();
 
     <script src="../vendor/moment/locale/ru.js"></script>
 
-
-    <script src="../vendor/angular-growl-2/build/angular-growl.js"></script>
+   <!-- endbuild -->
+   <script src="../vendor/angular-growl-2/build/angular-growl.js"></script>
 
    <!-- build:js -->
     <script src="../static/js/app.common.js"></script>
