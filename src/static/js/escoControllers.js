@@ -42,7 +42,7 @@ angular.module('esco').controller('escoController', [
       }
     }
     $scope.start = function() {
-
+    console.log("test");
       $log.info({
         message: "Setup connection to remote_db",
         auctions_loggedin: $cookies.auctions_loggedin||utilsService.detectIE()

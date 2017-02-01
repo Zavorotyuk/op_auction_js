@@ -436,13 +436,13 @@
                 </div>
             </div>
         </div>
+        <!-- view_bids_form -->
         <div ng-show="view_bids_form" class="panel panel-default bg-warning fixed-bottom" ng-class="{'auction-with-one-price': (auction_doc.auction_type||'default') == 'default'}">
             <div class="panel-body bg-warning">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="container">
-                            <alert ng-repeat="alert in alerts" type="{{alert.type}}" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></alert>
-                            <!---BidsForm-->
+                            <alert ng-repeat="alert in alerts" type="{{alert.type}}" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></alert>      
                             <form id="BidsForm" name="form.BidsForm" role="form">
                                 <label for="bid"><span translate>Your proposal</span>:</label>
                                 <span ng-init="max_bid_amount()" class="max_bid_amount" id="max_bid_amount" ng-if="(auction_doc.auction_type||'default') == 'default'"><span id="max_bid_amount_price">{{ calculated_max_bid_amount|fraction }}</span> {{'or lower'|translate}}</span>
@@ -479,12 +479,12 @@
                                     </div>
                                 </div>
                             </form>
-                            <!--BidsForm /-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- view_bids_form -->
     </div>
     </div>
     <!-- /.container -->

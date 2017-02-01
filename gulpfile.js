@@ -9,6 +9,8 @@ const clean = require('gulp-clean');
 const cleanCss = require('gulp-clean-css');
 const imagemin = require('gulp-imagemin');
 const plumber = require('gulp-plumber');
+const hash = require('gulp-hash');
+const replace = require('gulp-replace');
 
 
 
@@ -38,7 +40,7 @@ const plumber = require('gulp-plumber');
   gulp.task('build:production', () =>
     runSequence('clean', ['replace:html', 'prepare:static',
       'copy:vendors', 'minify:js','minify:img','minify:main.css',
-      'copy:other'], () => {
+      'copy:other'], 'hash:production', () => {
         console.log("Configured production environment");
       })
   );
@@ -70,6 +72,24 @@ const plumber = require('gulp-plumber');
       .pipe(gulp.dest('_attachments/tenders/'))
   );
 
+  gulp.task('hash:production', ['hash:esco', 'hash:tenders']);
+
+  gulp.task('hash:esco', () => {
+    let assets = require('./_attachments/assets.json')
+    gulp.src('./_attachments/esco/index.html')
+      .pipe(replace('main.min.js', assets['main.min.js']))
+      .pipe(replace('starter-template.min.css', assets['starter-template.min.css']))
+      .pipe(gulp.dest('_attachments/esco/'))
+  });
+
+  gulp.task('hash:tenders', () => {
+    let assets = require('./_attachments/assets.json')
+    gulp.src('./_attachments/tenders/index.html')
+      .pipe(replace('main.min.js', assets['main.min.js']))
+      .pipe(replace('starter-template.min.css', assets['starter-template.min.css']))
+      .pipe(gulp.dest('_attachments/tenders'))
+  });
+
 
   gulp.task('prepare:static', ['minify:js','minify:static/css',
     'minify:static/img','copy:fonts']);
@@ -81,8 +101,11 @@ const plumber = require('gulp-plumber');
       .pipe(concat('main.min.js'))
       .pipe(ngAnnotate())
       .pipe(uglify())
-      .pipe(plumber.stop())
+      .pipe(hash())
       .pipe(gulp.dest('_attachments/static/js'))
+      .pipe(hash.manifest('assets.json'))
+      .pipe(gulp.dest('_attachments/'))
+      .pipe(plumber.stop())
   );
 
 
@@ -91,8 +114,11 @@ const plumber = require('gulp-plumber');
       .pipe(plumber())
       .pipe(cleanCss({compatibility: 'ie8'}))
       .pipe(rename('starter-template.min.css'))
+      .pipe(hash())
+      .pipe(gulp.dest('./_attachments/static/css'))
+      .pipe(hash.manifest('assets.json'))
+      .pipe(gulp.dest('./_attachments/'))
       .pipe(plumber.stop())
-      .pipe(gulp.dest('_attachments/static/css'))
   );
 
 
@@ -130,7 +156,7 @@ const plumber = require('gulp-plumber');
 
 
   gulp.task('copy:vendors', () =>
-    gulp.src('src/vendor/*')
+    gulp.src('src/vendor/**/*')
       .pipe(gulp.dest('_attachments/vendor/'))
   );
 
