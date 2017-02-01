@@ -161,11 +161,11 @@ let vendorPath = [
 
 
   gulp.task('minify:img', () =>
-    gulp.src('src/img/*')
+    gulp.src('src/*.png ')
       .pipe(plumber())
       .pipe(imagemin())
       .pipe(plumber.stop())
-      .pipe(gulp.dest('_attachments/img'))
+      .pipe(gulp.dest('_attachments/'))
   );
 
 
