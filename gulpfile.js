@@ -60,6 +60,7 @@ let vendorPath = [
 
   gulp.task('replace:html', ['replace:esco', 'replace:tenders']);
 
+
   gulp.task('replace:esco', () =>
     gulp.src('src/esco/index.html')
       .pipe(plumber())
@@ -71,6 +72,7 @@ let vendorPath = [
       .pipe(plumber.stop())
       .pipe(gulp.dest('_attachments/esco/'))
   );
+
 
   gulp.task('replace:tenders', () =>
     gulp.src('src/tenders/index.html')
@@ -84,7 +86,9 @@ let vendorPath = [
       .pipe(gulp.dest('_attachments/tenders/'))
   );
 
+
   gulp.task('hash:production', ['hash:esco', 'hash:tenders']);
+
 
   gulp.task('hash:esco', () => {
     let assets = require('./_attachments/assets.json')
@@ -94,6 +98,7 @@ let vendorPath = [
       .pipe(replace('vendor.min.js', assets['vendor.min.js']))
       .pipe(gulp.dest('_attachments/esco/'))
   });
+
 
   gulp.task('hash:tenders', () => {
     let assets = require('./_attachments/assets.json')
@@ -178,6 +183,7 @@ let vendorPath = [
       .pipe(hash.manifest('assets.json'))
       .pipe(gulp.dest('_attachments/'))
   );
+
 
   gulp.task('copy:customVendor', () =>
     gulp.src('./src/vendor/angular-growl-2/**/*')

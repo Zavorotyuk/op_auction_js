@@ -340,7 +340,7 @@ angular.module('esco').controller('escoController', [
           return $scope.view_bids_form;
         }
       }
-      $scope.view_bids_form = true;
+      $scope.view_bids_form = false;
       return $scope.view_bids_form;
     };
 
@@ -414,7 +414,7 @@ angular.module('esco').controller('escoController', [
       if ($rootScope.form.BidsForm.$valid) {
         $rootScope.alerts = [];
         var bid_amount = parseFloat(bid) || parseFloat($rootScope.form.bid) || 0;
-        if (bid_amount == $scope.minimal_bid.amount) {
+        if (bid_amount == $scope.maximal_bid.amount) {
           msg_id = Math.random();
           $rootScope.alerts.push({
             msg_id: msg_id,
@@ -571,7 +571,7 @@ angular.module('esco').controller('escoController', [
         }
         $scope.auction_doc.stages.forEach(filter_func);
         $scope.auction_doc.initial_bids.forEach(filter_func);
-        $scope.minimal_bid = bids.sort(function(a, b) {
+        $scope.maximal_bid = bids.sort(function(a, b) {
           if ($scope.auction_doc.auction_type == 'meat') {
             var diff = math.fraction(a.amount_features) - math.fraction(b.amount_features);
           } else {
